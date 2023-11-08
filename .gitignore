@@ -1,1 +1,4 @@
 myenv/
+counter_app/__pycache__/
+counter_project/__pycache__/
+db.sqlite3
