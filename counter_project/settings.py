@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-90yd#v$6a&90a!8-7w*0rj0_0$h*l_5j@9hxzidh3s1nq1lri7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'counter_app'
+    'counter_app',
+    'corsheaders',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -48,10 +51,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "counter_project.urls"
 
+
+CORS_ORIGIN_ALLOW_ALL = True
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -106,6 +112,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
